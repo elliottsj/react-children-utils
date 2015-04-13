@@ -11,10 +11,14 @@ import React from 'react';
  * @param callback {forEachCallback} A function to be run for each child
  */
 export function reactChildrenForEachDeep(children, callback) {
+  _reactChildrenForEachDeep(children, callback, 1);
+}
+
+function _reactChildrenForEachDeep(children, callback, depth) {
   React.Children.forEach(children, (child, i) => {
-    callback(child, i);
+    callback(child, i, depth);
     if (child.props && child.props.children) {
-      reactChildrenForEachDeep(child.props.children, callback);
+      _reactChildrenForEachDeep(child.props.children, callback, depth + 1);
     }
   });
 }
