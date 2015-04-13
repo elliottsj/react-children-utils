@@ -13,7 +13,7 @@ import React from 'react';
 export function reactChildrenForEachDeep(children, callback) {
   React.Children.forEach(children, (child, i) => {
     callback(child, i);
-    if (child.props.children) {
+    if (child.props && child.props.children) {
       reactChildrenForEachDeep(child.props.children, callback);
     }
   });
