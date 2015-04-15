@@ -1,6 +1,6 @@
 'use strict';
 
-/* global jest, beforeEach, describe, it, expect */
+/* global jest, describe, it, expect */
 
 import React from 'react';
 
