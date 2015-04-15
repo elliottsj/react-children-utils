@@ -7,7 +7,10 @@ import React from 'react';
 jest.dontMock('../reactUtils');
 
 describe('reactUtils', () => {
-  let reactChildrenForEachDeep = require('../reactUtils').reactChildrenForEachDeep;
+  let {
+    reactChildrenForEachDeep,
+    reactChildrenFilter
+  } = require('../reactUtils');
 
   describe('#reactChildrenForEachDeep', () => {
     it('iterates over immediate children and their content', () => {
@@ -48,6 +51,28 @@ describe('reactUtils', () => {
       expect(callback.mock.calls[5][0 /* child */]).toBe('Baz');
       expect(callback.mock.calls[5][1 /* index */]).toBe(0);
       expect(callback.mock.calls[5][2 /* depth */]).toBe(2);
+    });
+  });
+
+  describe('#reactChildrenFilter', () => {
+    it('filters immediate children satisfying the predicate', () => {
+      let element = (
+        <div>
+          <h3>Foo</h3>
+          <p>Bar</p>
+          <p>
+            <h3>Baz</h3>
+          </p>
+          <h3>Qux</h3>
+        </div>
+      );
+
+      let h3Elements = reactChildrenFilter(element.props.children, child => child.type === 'h3');
+
+      expect(h3Elements).toBeDefined();
+      expect(h3Elements.length).toBe(2);
+      expect(h3Elements[0].props.children).toBe('Foo');
+      expect(h3Elements[1].props.children).toBe('Qux');
     });
   });
 
