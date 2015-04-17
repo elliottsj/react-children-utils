@@ -9,7 +9,8 @@ jest.dontMock('../reactUtils');
 describe('reactUtils', () => {
   let {
     reactChildrenForEachDeep,
-    reactChildrenFilter
+    reactChildrenFilter,
+    reactChildrenReduce
   } = require('../reactUtils');
 
   describe('#reactChildrenForEachDeep', () => {
@@ -73,6 +74,32 @@ describe('reactUtils', () => {
       expect(h3Elements.length).toBe(2);
       expect(h3Elements[0].props.children).toBe('Foo');
       expect(h3Elements[1].props.children).toBe('Qux');
+    });
+  });
+
+  describe('#reactChildrenReduce', () => {
+    it('reduces children to the expected value given an iteratee and accumulator', () => {
+      let element = (
+        <div>
+          <h3>Foo</h3>
+          <p>Bar</p>
+          <p>
+            <h3>Baz</h3>
+          </p>
+          <h3>Qux</h3>
+        </div>
+      );
+
+      // Create a string of the types of the children, concatenated together
+      let i = 0;  // keep track of expected index
+      let elementTypeString = reactChildrenReduce(element.props.children, (result, child, index, children) => {
+        expect(index).toBe(i);
+        i++;
+        expect(children).toBe(element.props.children);
+        return result + child.type;
+      }, '');
+
+      expect(elementTypeString).toBe('h3pph3');
     });
   });
 

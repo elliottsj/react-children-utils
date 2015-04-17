@@ -19,7 +19,7 @@ function _reactChildrenForEachDeep(children, callback, depth) {
  * Like React.Children.forEach(), but traverses through all descendant children.
  *
  * @param children Children of a React element, i.e. `elem.props.children`
- * @param callback {forEachCallback} A function to be run for each child
+ * @param {forEachCallback} callback A function to be run for each child
  */
 export function reactChildrenForEachDeep(children, callback) {
   _reactChildrenForEachDeep(children, callback, 1);
@@ -35,11 +35,11 @@ export function reactChildrenForEachDeep(children, callback) {
  */
 
 /**
- * Iterates over given chilren, returning an array of all children `predicate`
+ * Iterates over given children, returning an array of all children `predicate`
  * returns truthy for.
  *
  * @param {*} children Children of a React element, i.e. `elem.props.children`
- * @param {function} predicate The function invoked per iteration
+ * @param {filterPredicate} predicate The function invoked per iteration
  */
 export function reactChildrenFilter(children, predicate) {
   let result = [];
@@ -57,4 +57,29 @@ export function reactChildrenFilter(children, predicate) {
  * @callback filterPredicate
  * @param {*} child The React child
  * @param {number} index The index of the child in its parent
+ */
+
+/**
+ * Reduces children to a value which is the accumulated result of running each element in collection through iteratee,
+ * where each successive invocation is supplied the return value of the previous.
+ *
+ * @param {*} children Children of a react element, i.e. `elem.props.children`
+ * @param {reduceIteratee} iteratee The function invoked per iteration
+ * @param {*} accumulator The initial value
+ */
+export function reactChildrenReduce(children, iteratee, accumulator) {
+  React.Children.forEach(children, (child, i) => {
+    accumulator = iteratee(accumulator, child, i, children);
+  });
+  return accumulator;
+}
+
+/**
+ * The function invoked per iteration of reactChildrenReduce.
+ *
+ * @callback reduceIteratee
+ * @param {*} accumulator The accumulated result of previous iterations
+ * @param {*} child The current React child
+ * @param {number} index The index of child in children
+ * @param {*} children The children passed to reactChildrenReduce
  */
