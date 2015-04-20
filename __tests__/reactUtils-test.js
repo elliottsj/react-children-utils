@@ -10,7 +10,8 @@ describe('reactUtils', () => {
   let {
     reactChildrenForEachDeep,
     reactChildrenFilter,
-    reactChildrenReduce
+    reactChildrenReduce,
+    getChildrenSubstr
   } = require('../reactUtils');
 
   describe('#reactChildrenForEachDeep', () => {
@@ -100,6 +101,34 @@ describe('reactUtils', () => {
       }, '');
 
       expect(elementTypeString).toBe('h3pph3');
+    });
+  });
+
+  describe('#getChildrenSubstr', () => {
+    it('gets a substring from the children', () => {
+      let element = (
+        <div>
+          Lorem ipsum
+          <h3>Foo</h3>
+          <p>Bar</p>
+          <p>
+            <h3>Baz</h3>
+          </p>
+          <h3>Qux</h3>
+        </div>
+      );
+
+      let ipsum = getChildrenSubstr(element.props.children, /* start */ 6, /* length */ 5);
+      expect(ipsum).toBe('ipsum');
+
+      let bar = getChildrenSubstr(element.props.children, /* start */ 14, /* length */ 3);
+      expect(bar).toBe('Bar');
+
+      let baz = getChildrenSubstr(element.props.children, /* start */ 17, /* length */ 3);
+      expect(baz).toBe('Baz');
+
+      let bazQux = getChildrenSubstr(element.props.children, /* start */ 17, /* length */ 6);
+      expect(bazQux).toBe('BazQux');
     });
   });
 

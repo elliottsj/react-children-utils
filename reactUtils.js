@@ -6,6 +6,9 @@
 
 import React from 'react';
 
+/**
+ * @private
+ */
 function _reactChildrenForEachDeep(children, callback, depth) {
   React.Children.forEach(children, (child, i) => {
     callback(child, i, depth);
@@ -83,3 +86,59 @@ export function reactChildrenReduce(children, iteratee, accumulator) {
  * @param {number} index The index of child in children
  * @param {*} children The children passed to reactChildrenReduce
  */
+
+/**
+ * @private
+ */
+function _getChildrenSubstr(children, start, length) {
+  /**
+   * `substr`: substring collected so far; may span multiple children
+   * `predLength`: length of all predecessor children so far
+   */
+  return reactChildrenReduce(children, ({substr, predLength}, child) => {
+    /**
+     * e.g.
+     *
+     *                  start          length
+     *                    |----------------------------|
+     * |------------||------------||------------||------------|
+     *     childA    ^   childB    ^   childC    ^   childD
+     *           predLength    predLength    predLength
+     *
+     * The substring overlaps only with childB, childC, and childD.
+     * If we're currently iterating over childD, predLength will be
+     * childA.length + childB.length + childC.length
+     */
+    let {substr: childSubstr, predLength: childLength} =
+      child.props
+          // Child has more children; find substr within
+        ? _getChildrenSubstr(child.props.children, Math.max(start - predLength, 0), length - substr.length)
+          // Child is a string
+        : {
+            substr:
+              // Check if it overlaps with desired substring
+              (start < predLength + child.length && start + length > predLength)
+                  // Child overlaps; extract substring
+                ? child.substr(Math.max(start - predLength, 0), length - substr.length)
+                  // Child does not overlap
+                : '',
+            predLength: child.length
+          };
+    return {
+      substr: substr + childSubstr,
+      predLength: predLength + childLength
+    };
+  }, /* initial value */ {substr: '', predLength: 0});
+}
+
+/**
+ * Get a substring from this block's children using the given start and length parameters.
+ *
+ * @param {*} children Children of a react element, i.e. `elem.props.children`
+ * @param {number} start Character index at the beginning of the substring
+ * @param {number} length Number of characters in the substring
+ * @return {string}
+ */
+export function getChildrenSubstr(children, start, length) {
+  return _getChildrenSubstr(children, start, length).substr;
+}
