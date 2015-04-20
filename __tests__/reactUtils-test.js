@@ -129,6 +129,9 @@ describe('reactUtils', () => {
 
       let bazQux = getChildrenSubstr(element.props.children, /* start */ 17, /* length */ 6);
       expect(bazQux).toBe('BazQux');
+
+      let all = getChildrenSubstr(element.props.children, /* start */ 0, /* length */ 23);
+      expect(all).toBe('Lorem ipsumFooBarBazQux');
     });
   });
 
