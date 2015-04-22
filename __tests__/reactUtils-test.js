@@ -11,7 +11,8 @@ describe('reactUtils', () => {
     reactChildrenForEachDeep,
     reactChildrenFilter,
     reactChildrenReduce,
-    getChildrenSubstr
+    getChildrenSubstr,
+    getChildrenLength
   } = require('../reactUtils');
 
   describe('#reactChildrenForEachDeep', () => {
@@ -132,6 +133,26 @@ describe('reactUtils', () => {
 
       let all = getChildrenSubstr(element.props.children, /* start */ 0, /* length */ 23);
       expect(all).toBe('Lorem ipsumFooBarBazQux');
+    });
+  });
+
+  describe('#getChildrenLength', () => {
+    it('gets the number of characters in an element', () => {
+      let element = (
+        <div>
+          Lorem ipsum
+          <h3>Foo</h3>
+          <p>Bar</p>
+          <p>
+            <h3>Baz</h3>
+          </p>
+          <h3>Qux</h3>
+        </div>
+      );
+
+      let length = getChildrenLength(element.props.children);
+
+      expect(length).toBe(23);
     });
   });
 

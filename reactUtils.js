@@ -132,7 +132,7 @@ function _getChildrenSubstr(children, start, length) {
 }
 
 /**
- * Get a substring from this block's children using the given start and length parameters.
+ * Get a substring from children using the given start and length parameters.
  *
  * @param {*} children Children of a react element, i.e. `elem.props.children`
  * @param {number} start Character index at the beginning of the substring
@@ -141,4 +141,16 @@ function _getChildrenSubstr(children, start, length) {
  */
 export function getChildrenSubstr(children, start, length) {
   return _getChildrenSubstr(children, start, length).substr;
+}
+
+/**
+ * Get the number of characters contained in children
+ *
+ * @param children Children of a react element
+ * @returns {number}
+ */
+export function getChildrenLength(children) {
+  return reactChildrenReduce(children, (length, child) =>
+    length + (child.props ? getChildrenLength(child.props.children) : child.length)
+  , 0);
 }
