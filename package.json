@@ -1,0 +1,37 @@
+{
+  "name": "react-children-utils",
+  "version": "0.0.1",
+  "description": "Utility functions for querying and manipulating React component children",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elliottsj/react-children-utils.git"
+  },
+  "keywords": [
+    "react",
+    "children",
+    "utils"
+  ],
+  "author": "Spencer Elliott <me@elliottsj.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elliottsj/react-children-utils/issues"
+  },
+  "homepage": "https://github.com/elliottsj/react-children-utils#readme",
+  "devDependencies": {
+    "babel-jest": "^5.3.0",
+    "jest-cli": "^0.4.15"
+  },
+  "peerDependencies": {
+    "react": "^0.13.3"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
+  }
+}

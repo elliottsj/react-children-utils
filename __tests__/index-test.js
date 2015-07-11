@@ -4,16 +4,16 @@
 
 import React from 'react';
 
-jest.dontMock('../reactUtils');
+jest.dontMock('../index');
 
-describe('reactUtils', () => {
+describe('react-children-utils', () => {
   let {
     reactChildrenForEachDeep,
     reactChildrenFilter,
     reactChildrenReduce,
     getChildrenSubstr,
     getChildrenLength
-  } = require('../reactUtils');
+  } = require('../index');
 
   describe('#reactChildrenForEachDeep', () => {
     it('iterates over immediate children and their content', () => {
