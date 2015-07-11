@@ -21,9 +21,12 @@
     "url": "https://github.com/elliottsj/react-children-utils/issues"
   },
   "homepage": "https://github.com/elliottsj/react-children-utils#readme",
+  "engines": {
+    "iojs": "^2.0.0"
+  },
   "devDependencies": {
     "babel-jest": "^5.3.0",
-    "jest-cli": "^0.4.15"
+    "jest-cli": "facebook/jest#0.5.x"
   },
   "peerDependencies": {
     "react": "^0.13.3"
