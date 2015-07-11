@@ -1,6 +1,6 @@
 {
   "name": "react-children-utils",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Utility functions for querying and manipulating React component children",
   "main": "index.js",
   "scripts": {
