@@ -1,4 +1,6 @@
 # react-children-utils [![npm package][npm-badge]][npm]
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/elliottsj/react-children-utils.svg)](https://greenkeeper.io/)
 Utility functions for querying and manipulating React component children
 
 ## install
